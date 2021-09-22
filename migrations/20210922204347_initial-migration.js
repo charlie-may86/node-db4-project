@@ -9,9 +9,18 @@ exports.up = async function (knex) {
       ingredients.string("ingredient_name", 200).notNullable().unique();
       ingredients.string("ingredient_unit", 50);
     })
-    .createTable("steps", (table) => {
-      table.increments();
-      
+    .createTable("steps", (step) => {
+      step.increments("step_id");
+      step.string("step_text", 200).notNullable();
+      step.integer("step_number").notNullable();
+      step
+        .integer("recipe_id")
+        .unsigned()
+        .notNullable()
+        .references("recipe_id")
+        .inTable("recipes")
+        .onDelete("RESTRICT")
+        .onUpdate("RESTRICT");
     })
     .createTable("step_ingredients", (table) => {
       table.increments();
