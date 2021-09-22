@@ -1,13 +1,17 @@
 exports.up = async function (knex) {
   await knex.schema
-    .createTable("recipes", (table) => {
-      table.increments();
+    .createTable("recipes", (recipes) => {
+      recipes.increments("recipe_id");
+      recipes.string("recipe_name", 200).notNullable().unique();
     })
-    .createTable("ingredients", (table) => {
-      table.increments();
+    .createTable("ingredients", (ingredients) => {
+      ingredients.increments("ingredient_id");
+      ingredients.string("ingredient_name", 200).notNullable().unique();
+      ingredients.string("ingredient_unit", 50);
     })
     .createTable("steps", (table) => {
       table.increments();
+      
     })
     .createTable("step_ingredients", (table) => {
       table.increments();
